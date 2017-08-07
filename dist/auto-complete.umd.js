@@ -510,6 +510,7 @@ var NguiAutoCompleteDirective = (function () {
         this.tabToSelect = true;
         this.matchFormatted = false;
         this.autoSelectFirstItem = false;
+        this.delay = 500;
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
@@ -791,6 +792,10 @@ var NguiAutoCompleteDirective = (function () {
         core_1.Input("auto-select-first-item"), 
         __metadata('design:type', Boolean)
     ], NguiAutoCompleteDirective.prototype, "autoSelectFirstItem", void 0);
+    __decorate([
+        core_1.Input("delay"), 
+        __metadata('design:type', Number)
+    ], NguiAutoCompleteDirective.prototype, "delay", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)

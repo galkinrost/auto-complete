@@ -42,6 +42,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   @Input("tab-to-select") tabToSelect: boolean = true;
   @Input("match-formatted") matchFormatted: boolean = false;
   @Input("auto-select-first-item") autoSelectFirstItem: boolean = false;
+  @Input("delay") delay: number = 500;
 
   @Input() ngModel: String;
   @Input('formControlName') formControlName: string;

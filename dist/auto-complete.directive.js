@@ -17,6 +17,7 @@ var NguiAutoCompleteDirective = (function () {
         this.tabToSelect = true;
         this.matchFormatted = false;
         this.autoSelectFirstItem = false;
+        this.delay = 500;
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
@@ -260,6 +261,7 @@ var NguiAutoCompleteDirective = (function () {
         'tabToSelect': [{ type: core_1.Input, args: ["tab-to-select",] },],
         'matchFormatted': [{ type: core_1.Input, args: ["match-formatted",] },],
         'autoSelectFirstItem': [{ type: core_1.Input, args: ["auto-select-first-item",] },],
+        'delay': [{ type: core_1.Input, args: ["delay",] },],
         'ngModel': [{ type: core_1.Input },],
         'formControlName': [{ type: core_1.Input, args: ['formControlName',] },],
         'extFormControl': [{ type: core_1.Input, args: ['formControl',] },],
