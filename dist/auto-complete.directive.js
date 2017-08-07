@@ -12,12 +12,13 @@ var NguiAutoCompleteDirective = (function () {
         this.renderer = renderer;
         this.viewContainerRef = viewContainerRef;
         this.parentForm = parentForm;
+        this.displayLoading = true;
         this.loadingTemplate = null;
         this.loadingText = "Loading";
         this.tabToSelect = true;
         this.matchFormatted = false;
         this.autoSelectFirstItem = false;
-        this.delay = 500;
+        this.delayMs = 500;
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
@@ -35,6 +36,7 @@ var NguiAutoCompleteDirective = (function () {
             component.placeholder = _this.autoCompletePlaceholder;
             component.acceptUserInput = _this.acceptUserInput;
             component.maxNumList = parseInt(_this.maxNumList, 10);
+            component.displayLoading = _this.displayLoading;
             component.loadingText = _this.loadingText;
             component.loadingTemplate = _this.loadingTemplate;
             component.listFormatter = _this.listFormatter;
@@ -43,6 +45,7 @@ var NguiAutoCompleteDirective = (function () {
             component.tabToSelect = _this.tabToSelect;
             component.matchFormatted = _this.matchFormatted;
             component.autoSelectFirstItem = _this.autoSelectFirstItem;
+            component.delayMs = _this.delayMs;
             component.valueSelected.subscribe(_this.selectNewValue);
             _this.acDropdownEl = _this.componentRef.location.nativeElement;
             _this.acDropdownEl.style.display = "none";
@@ -252,6 +255,7 @@ var NguiAutoCompleteDirective = (function () {
         'acceptUserInput': [{ type: core_1.Input, args: ["accept-user-input",] },],
         'maxNumList': [{ type: core_1.Input, args: ["max-num-list",] },],
         'selectValueOf': [{ type: core_1.Input, args: ["select-value-of",] },],
+        'displayLoading': [{ type: core_1.Input, args: ["display-loading",] },],
         'loadingTemplate': [{ type: core_1.Input, args: ["loading-template",] },],
         'listFormatter': [{ type: core_1.Input, args: ["list-formatter",] },],
         'loadingText': [{ type: core_1.Input, args: ["loading-text",] },],
@@ -261,7 +265,7 @@ var NguiAutoCompleteDirective = (function () {
         'tabToSelect': [{ type: core_1.Input, args: ["tab-to-select",] },],
         'matchFormatted': [{ type: core_1.Input, args: ["match-formatted",] },],
         'autoSelectFirstItem': [{ type: core_1.Input, args: ["auto-select-first-item",] },],
-        'delay': [{ type: core_1.Input, args: ["delay",] },],
+        'delayMs': [{ type: core_1.Input, args: ["delay",] },],
         'ngModel': [{ type: core_1.Input },],
         'formControlName': [{ type: core_1.Input, args: ['formControlName',] },],
         'extFormControl': [{ type: core_1.Input, args: ['formControl',] },],

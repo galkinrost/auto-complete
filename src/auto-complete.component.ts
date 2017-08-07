@@ -32,8 +32,8 @@ import { NguiAutoComplete } from "./auto-complete";
 
     <!-- dropdown that user can select -->
     <ul *ngIf="dropdownVisible" [class.empty]="emptyList">
-      <li *ngIf="isLoading && loadingTemplate" class="loading" [innerHTML]="loadingTemplate"></li>
-      <li *ngIf="isLoading && !loadingTemplate" class="loading">{{loadingText}}</li>
+      <li *ngIf="displayLoading && isLoading && loadingTemplate" class="loading" [innerHTML]="loadingTemplate"></li>
+      <li *ngIf="displayLoading && isLoading && !loadingTemplate" class="loading">{{loadingText}}</li>
       <li *ngIf="minCharsEntered && !isLoading && !filteredList.length"
            (mousedown)="selectOne('')"
            class="no-match-found">{{noMatchFoundText || 'No Result Found'}}</li>
@@ -117,6 +117,7 @@ export class NguiAutoCompleteComponent implements OnInit {
   @Input("blank-option-text") blankOptionText: string;
   @Input("no-match-found-text") noMatchFoundText: string;
   @Input("accept-user-input") acceptUserInput: boolean;
+  @Input("display-loading") displayLoading: boolean = true;
   @Input("loading-text") loadingText: string = "Loading";
   @Input("loading-template") loadingTemplate = null;
   @Input("max-num-list") maxNumList: number;

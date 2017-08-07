@@ -33,6 +33,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   @Input("accept-user-input") acceptUserInput: boolean;
   @Input("max-num-list") maxNumList: string;
   @Input("select-value-of") selectValueOf: string;
+  @Input("display-loading") displayLoading: boolean = true;
   @Input("loading-template") loadingTemplate = null;
   @Input("list-formatter") listFormatter;
   @Input("loading-text") loadingText: string = "Loading";
@@ -42,7 +43,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   @Input("tab-to-select") tabToSelect: boolean = true;
   @Input("match-formatted") matchFormatted: boolean = false;
   @Input("auto-select-first-item") autoSelectFirstItem: boolean = false;
-  @Input("delay") delay: number = 500;
+  @Input("delay") delayMs: number = 500;
 
   @Input() ngModel: String;
   @Input('formControlName') formControlName: string;
@@ -162,6 +163,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
     component.acceptUserInput = this.acceptUserInput;
     component.maxNumList = parseInt(this.maxNumList, 10);
 
+    component.displayLoading = this.displayLoading;
     component.loadingText = this.loadingText;
     component.loadingTemplate = this.loadingTemplate;
     component.listFormatter = this.listFormatter;
@@ -170,6 +172,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
     component.tabToSelect = this.tabToSelect;
     component.matchFormatted = this.matchFormatted;
     component.autoSelectFirstItem = this.autoSelectFirstItem;
+    component.delayMs = this.delayMs;
 
     component.valueSelected.subscribe(this.selectNewValue);
 

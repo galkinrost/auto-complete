@@ -19,6 +19,7 @@ export declare class NguiAutoCompleteComponent implements OnInit {
     blankOptionText: string;
     noMatchFoundText: string;
     acceptUserInput: boolean;
+    displayLoading: boolean;
     loadingText: string;
     loadingTemplate: any;
     maxNumList: number;

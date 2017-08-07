@@ -18,6 +18,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     acceptUserInput: boolean;
     maxNumList: string;
     selectValueOf: string;
+    displayLoading: boolean;
     loadingTemplate: any;
     listFormatter: any;
     loadingText: string;
@@ -27,7 +28,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     tabToSelect: boolean;
     matchFormatted: boolean;
     autoSelectFirstItem: boolean;
-    delay: number;
+    delayMs: number;
     ngModel: String;
     formControlName: string;
     extFormControl: FormControl;
