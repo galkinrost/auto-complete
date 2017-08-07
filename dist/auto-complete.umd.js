@@ -119,6 +119,8 @@ var NguiAutoCompleteComponent = (function () {
         this.showDropdownOnInit = false;
         this.tabToSelect = true;
         this.matchFormatted = false;
+        this.autoSelectFirstItem = false;
+        this.delayMs = 500;
         this.valueSelected = new core_1.EventEmitter();
         this.dropdownVisible = false;
         this.isLoading = false;
@@ -126,7 +128,7 @@ var NguiAutoCompleteComponent = (function () {
         this.minCharsEntered = false;
         this.itemIndex = null;
         this.reloadListInDelay = function (evt) {
-            var delayMs = _this.isSrcArr() ? 10 : 500;
+            var delayMs = _this.delayMs;
             var keyword = evt.target.value;
             // executing after user stopped typing
             _this.delay(function () { return _this.reloadList(keyword); }, delayMs);
@@ -185,6 +187,9 @@ var NguiAutoCompleteComponent = (function () {
         this.autoComplete.source = this.source;
         this.autoComplete.pathToData = this.pathToData;
         this.autoComplete.listFormatter = this.listFormatter;
+        if (this.autoSelectFirstItem) {
+            this.itemIndex = 0;
+        }
         setTimeout(function () {
             if (_this.autoCompleteInput) {
                 _this.autoCompleteInput.nativeElement.focus();
@@ -336,6 +341,14 @@ var NguiAutoCompleteComponent = (function () {
         core_1.Input("match-formatted"), 
         __metadata('design:type', Boolean)
     ], NguiAutoCompleteComponent.prototype, "matchFormatted", void 0);
+    __decorate([
+        core_1.Input("auto-select-first-item"), 
+        __metadata('design:type', Boolean)
+    ], NguiAutoCompleteComponent.prototype, "autoSelectFirstItem", void 0);
+    __decorate([
+        core_1.Input("delay"), 
+        __metadata('design:type', Number)
+    ], NguiAutoCompleteComponent.prototype, "delayMs", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
@@ -496,6 +509,7 @@ var NguiAutoCompleteDirective = (function () {
         this.loadingText = "Loading";
         this.tabToSelect = true;
         this.matchFormatted = false;
+        this.autoSelectFirstItem = false;
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
@@ -520,6 +534,7 @@ var NguiAutoCompleteDirective = (function () {
             component.noMatchFoundText = _this.noMatchFoundText;
             component.tabToSelect = _this.tabToSelect;
             component.matchFormatted = _this.matchFormatted;
+            component.autoSelectFirstItem = _this.autoSelectFirstItem;
             component.valueSelected.subscribe(_this.selectNewValue);
             _this.acDropdownEl = _this.componentRef.location.nativeElement;
             _this.acDropdownEl.style.display = "none";
@@ -706,7 +721,7 @@ var NguiAutoCompleteDirective = (function () {
         return item;
     };
     NguiAutoCompleteDirective.prototype.renderValue = function (item) {
-        this.inputEl && (this.inputEl.value = '' + item);
+        this.inputEl && (this.inputEl.value = '' + (item !== null ? item : ''));
     };
     __decorate([
         core_1.Input("auto-complete-placeholder"), 
@@ -772,6 +787,10 @@ var NguiAutoCompleteDirective = (function () {
         core_1.Input("match-formatted"), 
         __metadata('design:type', Boolean)
     ], NguiAutoCompleteDirective.prototype, "matchFormatted", void 0);
+    __decorate([
+        core_1.Input("auto-select-first-item"), 
+        __metadata('design:type', Boolean)
+    ], NguiAutoCompleteDirective.prototype, "autoSelectFirstItem", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)

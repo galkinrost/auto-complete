@@ -1,3 +1,4 @@
+/// <reference types="core-js" />
 import { ComponentRef, ViewContainerRef, EventEmitter, OnInit, ComponentFactoryResolver, Renderer, SimpleChanges, OnChanges } from "@angular/core";
 import { NguiAutoCompleteComponent } from "./auto-complete.component";
 import { ControlContainer, AbstractControl, FormControl } from "@angular/forms";
@@ -25,6 +26,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     valueFormatter: any;
     tabToSelect: boolean;
     matchFormatted: boolean;
+    autoSelectFirstItem: boolean;
     ngModel: String;
     formControlName: string;
     extFormControl: FormControl;

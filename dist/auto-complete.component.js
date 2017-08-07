@@ -21,6 +21,8 @@ var NguiAutoCompleteComponent = (function () {
         this.showDropdownOnInit = false;
         this.tabToSelect = true;
         this.matchFormatted = false;
+        this.autoSelectFirstItem = false;
+        this.delayMs = 500;
         this.valueSelected = new core_1.EventEmitter();
         this.dropdownVisible = false;
         this.isLoading = false;
@@ -28,7 +30,7 @@ var NguiAutoCompleteComponent = (function () {
         this.minCharsEntered = false;
         this.itemIndex = null;
         this.reloadListInDelay = function (evt) {
-            var delayMs = _this.isSrcArr() ? 10 : 500;
+            var delayMs = _this.delayMs;
             var keyword = evt.target.value;
             // executing after user stopped typing
             _this.delay(function () { return _this.reloadList(keyword); }, delayMs);
@@ -87,6 +89,9 @@ var NguiAutoCompleteComponent = (function () {
         this.autoComplete.source = this.source;
         this.autoComplete.pathToData = this.pathToData;
         this.autoComplete.listFormatter = this.listFormatter;
+        if (this.autoSelectFirstItem) {
+            this.itemIndex = 0;
+        }
         setTimeout(function () {
             if (_this.autoCompleteInput) {
                 _this.autoCompleteInput.nativeElement.focus();
@@ -209,6 +214,8 @@ var NguiAutoCompleteComponent = (function () {
         'showDropdownOnInit': [{ type: core_1.Input, args: ["show-dropdown-on-init",] },],
         'tabToSelect': [{ type: core_1.Input, args: ["tab-to-select",] },],
         'matchFormatted': [{ type: core_1.Input, args: ["match-formatted",] },],
+        'autoSelectFirstItem': [{ type: core_1.Input, args: ["auto-select-first-item",] },],
+        'delayMs': [{ type: core_1.Input, args: ["delay",] },],
         'valueSelected': [{ type: core_1.Output },],
         'autoCompleteInput': [{ type: core_1.ViewChild, args: ['autoCompleteInput',] },],
         'autoCompleteContainer': [{ type: core_1.ViewChild, args: ['autoCompleteContainer',] },],

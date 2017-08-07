@@ -260,6 +260,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
       }
       item.toString = () => displayVal;
     }
+
     return item;
   }
 
@@ -303,6 +304,6 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   };
 
   private renderValue(item: any) {
-    this.inputEl && (this.inputEl.value = '' + item);
+    this.inputEl && (this.inputEl.value = '' + ( item !== null ? item : '' ) );
   }
 }

@@ -125,6 +125,7 @@ export class NguiAutoCompleteComponent implements OnInit {
   @Input("tab-to-select") tabToSelect: boolean = true;
   @Input("match-formatted") matchFormatted: boolean = false;
   @Input("auto-select-first-item") autoSelectFirstItem: boolean = false;
+  @Input("delay") delayMs: number = 500;
 
   @Output() valueSelected = new EventEmitter();
   @ViewChild('autoCompleteInput') autoCompleteInput: ElementRef;
@@ -175,7 +176,7 @@ export class NguiAutoCompleteComponent implements OnInit {
   }
 
   reloadListInDelay = (evt: any): void  => {
-    let delayMs = this.isSrcArr() ? 10 : 500;
+    let delayMs = this.delayMs;
     let keyword = evt.target.value;
 
     // executing after user stopped typing

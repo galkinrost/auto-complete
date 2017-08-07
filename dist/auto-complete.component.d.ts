@@ -26,6 +26,8 @@ export declare class NguiAutoCompleteComponent implements OnInit {
     showDropdownOnInit: boolean;
     tabToSelect: boolean;
     matchFormatted: boolean;
+    autoSelectFirstItem: boolean;
+    delayMs: number;
     valueSelected: EventEmitter<{}>;
     autoCompleteInput: ElementRef;
     autoCompleteContainer: ElementRef;
