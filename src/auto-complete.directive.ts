@@ -197,13 +197,15 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   };
 
   blurHandler(evt: any) {
-    let component = this.componentRef.instance;
+    if (this.componentRef) {
+        let component = this.componentRef.instance;
 
-    if (this.selectOnBlur && component.filteredList.length > 0) {
-        component.selectOne(component.filteredList[component.itemIndex]);
+        if (this.selectOnBlur && component.filteredList.length > 0) {
+            component.selectOne(component.filteredList[ component.itemIndex ]);
+        }
+
+        this.hideAutoCompleteDropdown(evt);
     }
-
-    this.hideAutoCompleteDropdown(evt);
   }
 
   hideAutoCompleteDropdown = (event?: any): void => {

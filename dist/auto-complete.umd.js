@@ -715,11 +715,13 @@ var NguiAutoCompleteDirective = (function () {
         }
     };
     NguiAutoCompleteDirective.prototype.blurHandler = function (evt) {
-        var component = this.componentRef.instance;
-        if (this.selectOnBlur && component.filteredList.length > 0) {
-            component.selectOne(component.filteredList[component.itemIndex]);
+        if (this.componentRef) {
+            var component = this.componentRef.instance;
+            if (this.selectOnBlur && component.filteredList.length > 0) {
+                component.selectOne(component.filteredList[component.itemIndex]);
+            }
+            this.hideAutoCompleteDropdown(evt);
         }
-        this.hideAutoCompleteDropdown(evt);
     };
     NguiAutoCompleteDirective.prototype.setToStringFunction = function (item) {
         if (item && typeof item === "object") {
