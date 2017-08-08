@@ -16,6 +16,7 @@ var NguiAutoCompleteDirective = (function () {
         this.loadingTemplate = null;
         this.loadingText = "Loading";
         this.tabToSelect = true;
+        this.selectOnBlur = false;
         this.matchFormatted = false;
         this.autoSelectFirstItem = false;
         this.delayMs = 500;
@@ -43,6 +44,7 @@ var NguiAutoCompleteDirective = (function () {
             component.blankOptionText = _this.blankOptionText;
             component.noMatchFoundText = _this.noMatchFoundText;
             component.tabToSelect = _this.tabToSelect;
+            component.selectOnBlur = _this.selectOnBlur;
             component.matchFormatted = _this.matchFormatted;
             component.autoSelectFirstItem = _this.autoSelectFirstItem;
             component.delayMs = _this.delayMs;
@@ -183,7 +185,7 @@ var NguiAutoCompleteDirective = (function () {
             this.el : this.el.querySelector("input");
         this.inputEl.addEventListener('focus', function (e) { return _this.showAutoCompleteDropdown(e); });
         this.inputEl.addEventListener('blur', function (e) {
-            _this.scheduledBlurHandler = _this.hideAutoCompleteDropdown;
+            _this.scheduledBlurHandler = _this.blurHandler;
         });
         this.inputEl.addEventListener('keydown', function (e) { return _this.keydownEventHandler(e); });
         this.inputEl.addEventListener('input', function (e) { return _this.inputEventHandler(e); });
@@ -201,6 +203,13 @@ var NguiAutoCompleteDirective = (function () {
             this.ngModel = this.setToStringFunction(changes['ngModel'].currentValue);
             this.renderValue(this.ngModel);
         }
+    };
+    NguiAutoCompleteDirective.prototype.blurHandler = function (evt) {
+        var component = this.componentRef.instance;
+        if (this.selectOnBlur && component.filteredList.length > 0) {
+            component.selectOne(component.filteredList[component.itemIndex]);
+        }
+        this.hideAutoCompleteDropdown(evt);
     };
     NguiAutoCompleteDirective.prototype.setToStringFunction = function (item) {
         if (item && typeof item === "object") {
@@ -263,6 +272,7 @@ var NguiAutoCompleteDirective = (function () {
         'noMatchFoundText': [{ type: core_1.Input, args: ["no-match-found-text",] },],
         'valueFormatter': [{ type: core_1.Input, args: ["value-formatter",] },],
         'tabToSelect': [{ type: core_1.Input, args: ["tab-to-select",] },],
+        'selectOnBlur': [{ type: core_1.Input, args: ["select-on-blur",] },],
         'matchFormatted': [{ type: core_1.Input, args: ["match-formatted",] },],
         'autoSelectFirstItem': [{ type: core_1.Input, args: ["auto-select-first-item",] },],
         'delayMs': [{ type: core_1.Input, args: ["delay",] },],

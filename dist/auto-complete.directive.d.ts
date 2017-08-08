@@ -26,6 +26,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     noMatchFoundText: string;
     valueFormatter: any;
     tabToSelect: boolean;
+    selectOnBlur: boolean;
     matchFormatted: boolean;
     autoSelectFirstItem: boolean;
     delayMs: number;
@@ -50,6 +51,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     ngOnDestroy(): void;
     ngOnChanges(changes: SimpleChanges): void;
     showAutoCompleteDropdown: (event?: any) => void;
+    blurHandler(evt: any): void;
     hideAutoCompleteDropdown: (event?: any) => void;
     styleAutoCompleteDropdown: () => void;
     setToStringFunction(item: any): any;
