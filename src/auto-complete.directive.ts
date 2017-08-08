@@ -41,6 +41,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
   @Input("no-match-found-text") noMatchFoundText: string;
   @Input("value-formatter") valueFormatter: any;
   @Input("tab-to-select") tabToSelect: boolean = true;
+  @Input("select-on-blur") selectOnBlur: boolean = false;
   @Input("match-formatted") matchFormatted: boolean = false;
   @Input("auto-select-first-item") autoSelectFirstItem: boolean = false;
   @Input("delay") delayMs: number = 500;
@@ -122,7 +123,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
 
     this.inputEl.addEventListener('focus', e => this.showAutoCompleteDropdown(e));
     this.inputEl.addEventListener('blur', e => {
-        this.scheduledBlurHandler = this.hideAutoCompleteDropdown;
+        this.scheduledBlurHandler = this.blurHandler;
     });
     this.inputEl.addEventListener('keydown', e => this.keydownEventHandler(e));
     this.inputEl.addEventListener('input', e => this.inputEventHandler(e));
@@ -170,6 +171,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
     component.blankOptionText = this.blankOptionText;
     component.noMatchFoundText = this.noMatchFoundText;
     component.tabToSelect = this.tabToSelect;
+    component.selectOnBlur = this.selectOnBlur;
     component.matchFormatted = this.matchFormatted;
     component.autoSelectFirstItem = this.autoSelectFirstItem;
     component.delayMs = this.delayMs;
@@ -193,6 +195,16 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges {
       component.dropdownVisible = true;
     });
   };
+
+  blurHandler(evt: any) {
+    let component = this.componentRef.instance;
+
+    if (this.selectOnBlur && component.filteredList.length > 0) {
+        component.selectOne(component.filteredList[component.itemIndex]);
+    }
+
+    this.hideAutoCompleteDropdown(evt);
+  }
 
   hideAutoCompleteDropdown = (event?: any): void => {
     if (this.componentRef) {

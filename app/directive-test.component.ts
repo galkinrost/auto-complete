@@ -12,6 +12,8 @@ let templateStr: string = `
       <div ngui-auto-complete 
         [source]="arrayOfStrings"
         [accept-user-input]="false"
+        [auto-select-first-item]="true"
+        [select-on-blur]="true"
         (ngModelChange)="myCallback($event)"
         placeholder="enter text">
         <input id="model1" [ngModel]="model1" autofocus />

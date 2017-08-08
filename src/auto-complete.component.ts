@@ -25,7 +25,7 @@ import { NguiAutoComplete } from "./auto-complete";
            #autoCompleteInput class="keyword"
            placeholder="{{placeholder}}"
            (focus)="showDropdownList($event)"
-           (blur)="hideDropdownList()"
+           (blur)="blurHandler($event)"
            (keydown)="inputElKeyHandler($event)"
            (input)="reloadListInDelay($event)"
            [(ngModel)]="keyword" />
@@ -127,6 +127,7 @@ export class NguiAutoCompleteComponent implements OnInit {
   @Input("match-formatted") matchFormatted: boolean = false;
   @Input("auto-select-first-item") autoSelectFirstItem: boolean = false;
   @Input("delay") delayMs: number = 500;
+  @Input("select-on-blur") selectOnBlur: boolean = false;
 
   @Output() valueSelected = new EventEmitter();
   @ViewChild('autoCompleteInput') autoCompleteInput: ElementRef;
@@ -255,6 +256,14 @@ export class NguiAutoCompleteComponent implements OnInit {
 
   selectOne(data: any) {
     this.valueSelected.emit(data);
+  };
+
+  blurHandler(evt: any) {
+    if (this.selectOnBlur && this.filteredList.length > 0) {
+        this.selectOne(this.filteredList[this.itemIndex]);
+    }
+
+    this.hideDropdownList();
   };
 
   inputElKeyHandler = (evt: any) => {
