@@ -36,6 +36,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     zIndex: string;
     ngModelChange: EventEmitter<{}>;
     valueChanged: EventEmitter<{}>;
+    customSelected: EventEmitter<{}>;
     componentRef: ComponentRef<NguiAutoCompleteComponent>;
     wrapperEl: HTMLElement;
     el: HTMLElement;
@@ -56,6 +57,7 @@ export declare class NguiAutoCompleteDirective implements OnInit, OnChanges {
     styleAutoCompleteDropdown: () => void;
     setToStringFunction(item: any): any;
     selectNewValue: (item: any) => void;
+    selectCustomValue: (text: string) => void;
     private keydownEventHandler;
     private inputEventHandler;
     private renderValue(item);

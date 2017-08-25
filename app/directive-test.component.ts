@@ -11,10 +11,11 @@ let templateStr: string = `
     <ngui-utils-1>
       <div ngui-auto-complete 
         [source]="arrayOfStrings"
-        [accept-user-input]="false"
-        [auto-select-first-item]="true"
+        [accept-user-input]="true"
+        [auto-select-first-item]="false"
         [select-on-blur]="true"
         (ngModelChange)="myCallback($event)"
+        (customSelected)="customCallback($event)"
         placeholder="enter text">
         <input id="model1" [ngModel]="model1" autofocus />
       </div>
@@ -156,6 +157,10 @@ export class DirectiveTestComponent {
   myCallback(newVal) {
     console.log("value is changed to ", newVal);
     this.model1 = newVal;
+  }
+
+  customCallback(text){
+    console.log("keyword ", text)
   }
 
   renderHero = (data: any) : SafeHtml => {

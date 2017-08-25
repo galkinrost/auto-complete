@@ -23,6 +23,7 @@ var NguiAutoCompleteDirective = (function () {
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
+        this.customSelected = new core_1.EventEmitter();
         //show auto-complete list below the current element
         this.showAutoCompleteDropdown = function (event) {
             _this.hideAutoCompleteDropdown();
@@ -30,6 +31,7 @@ var NguiAutoCompleteDirective = (function () {
             var factory = _this.resolver.resolveComponentFactory(auto_complete_component_1.NguiAutoCompleteComponent);
             _this.componentRef = _this.viewContainerRef.createComponent(factory);
             var component = _this.componentRef.instance;
+            component.keyword = _this.inputEl.value;
             component.showInputTag = false; //Do NOT display autocomplete input tag separately
             component.pathToData = _this.pathToData;
             component.minChars = _this.minChars;
@@ -49,6 +51,7 @@ var NguiAutoCompleteDirective = (function () {
             component.autoSelectFirstItem = _this.autoSelectFirstItem;
             component.delayMs = _this.delayMs;
             component.valueSelected.subscribe(_this.selectNewValue);
+            component.customSelected.subscribe(_this.selectCustomValue);
             _this.acDropdownEl = _this.componentRef.location.nativeElement;
             _this.acDropdownEl.style.display = "none";
             // if this element is not an input tag, move dropdown after input tag
@@ -120,6 +123,10 @@ var NguiAutoCompleteDirective = (function () {
             _this.valueChanged.emit(val);
             _this.hideAutoCompleteDropdown();
         };
+        this.selectCustomValue = function (text) {
+            _this.customSelected.emit(text);
+            _this.hideAutoCompleteDropdown();
+        };
         this.keydownEventHandler = function (evt) {
             if (_this.componentRef) {
                 var component = _this.componentRef.instance;
@@ -130,6 +137,7 @@ var NguiAutoCompleteDirective = (function () {
             if (_this.componentRef) {
                 var component = _this.componentRef.instance;
                 component.dropdownVisible = true;
+                component.keyword = evt.target.value;
                 component.reloadListInDelay(evt);
             }
             else {
@@ -207,7 +215,7 @@ var NguiAutoCompleteDirective = (function () {
     NguiAutoCompleteDirective.prototype.blurHandler = function (evt) {
         if (this.componentRef) {
             var component = this.componentRef.instance;
-            if (this.selectOnBlur && component.filteredList.length > 0) {
+            if (this.selectOnBlur) {
                 component.selectOne(component.filteredList[component.itemIndex]);
             }
             this.hideAutoCompleteDropdown(evt);
@@ -284,6 +292,7 @@ var NguiAutoCompleteDirective = (function () {
         'zIndex': [{ type: core_1.Input, args: ["z-index",] },],
         'ngModelChange': [{ type: core_1.Output },],
         'valueChanged': [{ type: core_1.Output },],
+        'customSelected': [{ type: core_1.Output },],
     };
     return NguiAutoCompleteDirective;
 }());

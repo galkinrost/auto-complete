@@ -124,6 +124,7 @@ var NguiAutoCompleteComponent = (function () {
         this.delayMs = 500;
         this.selectOnBlur = false;
         this.valueSelected = new core_1.EventEmitter();
+        this.customSelected = new core_1.EventEmitter();
         this.dropdownVisible = false;
         this.isLoading = false;
         this.filteredList = [];
@@ -157,13 +158,11 @@ var NguiAutoCompleteComponent = (function () {
                     _this.scrollToView(_this.itemIndex);
                     break;
                 case 13:
-                    if (_this.filteredList.length > 0) {
-                        _this.selectOne(_this.filteredList[_this.itemIndex]);
-                    }
+                    _this.selectOne(_this.filteredList[_this.itemIndex]);
                     evt.preventDefault();
                     break;
                 case 9:
-                    if (_this.tabToSelect && _this.filteredList.length > 0) {
+                    if (_this.tabToSelect) {
                         _this.selectOne(_this.filteredList[_this.itemIndex]);
                     }
                     break;
@@ -259,11 +258,16 @@ var NguiAutoCompleteComponent = (function () {
         }
     };
     NguiAutoCompleteComponent.prototype.selectOne = function (data) {
-        this.valueSelected.emit(data);
+        if (data) {
+            this.valueSelected.emit(data);
+        }
+        else {
+            this.customSelected.emit(this.keyword);
+        }
     };
     ;
     NguiAutoCompleteComponent.prototype.blurHandler = function (evt) {
-        if (this.selectOnBlur && this.filteredList.length > 0) {
+        if (this.selectOnBlur) {
             this.selectOne(this.filteredList[this.itemIndex]);
         }
         this.hideDropdownList();
@@ -370,6 +374,10 @@ var NguiAutoCompleteComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], NguiAutoCompleteComponent.prototype, "valueSelected", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], NguiAutoCompleteComponent.prototype, "customSelected", void 0);
     __decorate([
         core_1.ViewChild('autoCompleteInput'), 
         __metadata('design:type', core_1.ElementRef)
@@ -533,6 +541,7 @@ var NguiAutoCompleteDirective = (function () {
         this.zIndex = "1";
         this.ngModelChange = new core_1.EventEmitter();
         this.valueChanged = new core_1.EventEmitter();
+        this.customSelected = new core_1.EventEmitter();
         //show auto-complete list below the current element
         this.showAutoCompleteDropdown = function (event) {
             _this.hideAutoCompleteDropdown();
@@ -540,6 +549,7 @@ var NguiAutoCompleteDirective = (function () {
             var factory = _this.resolver.resolveComponentFactory(auto_complete_component_1.NguiAutoCompleteComponent);
             _this.componentRef = _this.viewContainerRef.createComponent(factory);
             var component = _this.componentRef.instance;
+            component.keyword = _this.inputEl.value;
             component.showInputTag = false; //Do NOT display autocomplete input tag separately
             component.pathToData = _this.pathToData;
             component.minChars = _this.minChars;
@@ -559,6 +569,7 @@ var NguiAutoCompleteDirective = (function () {
             component.autoSelectFirstItem = _this.autoSelectFirstItem;
             component.delayMs = _this.delayMs;
             component.valueSelected.subscribe(_this.selectNewValue);
+            component.customSelected.subscribe(_this.selectCustomValue);
             _this.acDropdownEl = _this.componentRef.location.nativeElement;
             _this.acDropdownEl.style.display = "none";
             // if this element is not an input tag, move dropdown after input tag
@@ -630,6 +641,10 @@ var NguiAutoCompleteDirective = (function () {
             _this.valueChanged.emit(val);
             _this.hideAutoCompleteDropdown();
         };
+        this.selectCustomValue = function (text) {
+            _this.customSelected.emit(text);
+            _this.hideAutoCompleteDropdown();
+        };
         this.keydownEventHandler = function (evt) {
             if (_this.componentRef) {
                 var component = _this.componentRef.instance;
@@ -640,6 +655,7 @@ var NguiAutoCompleteDirective = (function () {
             if (_this.componentRef) {
                 var component = _this.componentRef.instance;
                 component.dropdownVisible = true;
+                component.keyword = evt.target.value;
                 component.reloadListInDelay(evt);
             }
             else {
@@ -717,7 +733,7 @@ var NguiAutoCompleteDirective = (function () {
     NguiAutoCompleteDirective.prototype.blurHandler = function (evt) {
         if (this.componentRef) {
             var component = this.componentRef.instance;
-            if (this.selectOnBlur && component.filteredList.length > 0) {
+            if (this.selectOnBlur) {
                 component.selectOne(component.filteredList[component.itemIndex]);
             }
             this.hideAutoCompleteDropdown(evt);
@@ -859,6 +875,10 @@ var NguiAutoCompleteDirective = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], NguiAutoCompleteDirective.prototype, "valueChanged", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], NguiAutoCompleteDirective.prototype, "customSelected", void 0);
     NguiAutoCompleteDirective = __decorate([
         core_1.Directive({
             selector: "[auto-complete], [ngui-auto-complete]"

@@ -31,6 +31,7 @@ export declare class NguiAutoCompleteComponent implements OnInit {
     delayMs: number;
     selectOnBlur: boolean;
     valueSelected: EventEmitter<{}>;
+    customSelected: EventEmitter<{}>;
     autoCompleteInput: ElementRef;
     autoCompleteContainer: ElementRef;
     el: HTMLElement;
